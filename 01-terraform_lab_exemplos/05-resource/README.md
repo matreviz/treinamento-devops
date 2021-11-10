@@ -9,3 +9,30 @@ resource "aws_instance" "web" {
   }
 }
 ```
+```
+provider "aws" {
+  region = "sa-east-1"
+}
+resource "aws_instance" "web" {
+  count = 01
+  subnet_id     = "subnet-05bbad60360717eb2"
+  ami= "ami-0e66f5495b4efdd0f"
+  instance_type = "t2.micro"
+  associate_public_ip_address = true
+  root_block_device {
+    encrypted = true
+    volume_size = 8
+  }
+  tags = {
+    Name = "ec2-tf-${count.index}"
+  }
+}
+
+output "instance_ip_add" {
+  value = [
+          for key, item in aws_instance.web:
+                "${item.private_ip} - ${item.public_dns}"
+          ]
+  description = "Mostra os IPs publicos e privados da maquina criada."
+}
+```
