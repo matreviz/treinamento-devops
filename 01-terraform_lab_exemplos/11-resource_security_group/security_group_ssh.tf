@@ -4,15 +4,27 @@
 # ingress = [  # inbound
 # egress = [ # outbound
 
-resource "aws_security_group" "allow_ssh" {
-  name        = "allow_ssh"
-  description = "Allow SSH inbound traffic"
+resource "aws_security_group" "allow_ssh_matheus" {
+  name        = "allow_ssh and http"
+  description = "Allow SSH and http inbound traffic"
+  vpc_id = "vpc-067238b3f1301e28b"
 
   ingress = [
     {
       description      = "SSH from VPC"
       from_port        = 22
       to_port          = 22
+      protocol         = "tcp"
+      cidr_blocks      = ["0.0.0.0/0"]
+      ipv6_cidr_blocks = ["::/0"]
+      prefix_list_ids = null,
+      security_groups = null,
+      self            = null
+    },
+    {
+      description      = "HTTP from VPC"
+      from_port        = 80
+      to_port          = 80
       protocol         = "tcp"
       cidr_blocks      = ["0.0.0.0/0"]
       ipv6_cidr_blocks = ["::/0"]
