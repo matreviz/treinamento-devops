@@ -4,10 +4,10 @@
 # ingress = [  # inbound
 # egress = [ # outbound
 
-resource "aws_security_group" "allow_ssh_terraform" {
+resource "aws_security_group" "allow_ssh_terraform_matheus" {
   name        = "allow_ssh_terraform2"
   description = "Allow SSH inbound traffic"
-  vpc_id      = aws_vpc.my_vpc.id
+  vpc_id      = aws_vpc.my_vpc_matheus.id
 
   ingress = [
     {
@@ -38,10 +38,10 @@ resource "aws_security_group" "allow_ssh_terraform" {
   ]
 
   tags = {
-    Name = "allow_ssh_terraform"
+    Name = "allow_ssh_terraform_matheus"
   }
 }
 
 output "allow_ssh_terraform" {
-  value = aws_security_group.allow_ssh_terraform.id
+  value = aws_security_group.allow_ssh_terraform_matheus.id
 }
