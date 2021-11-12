@@ -1,4 +1,8 @@
 module "criar_instancia" {
-  source = "/home/ubuntu/treinamento-devops/01-terraform_lab_exemplos/19-module/meu-modulo"
+  source = "git@github.com:matreviz/mod_create_ec2.git"
   nome = "ec2-teste-modulo-matheus"
+}
+
+output "out" {
+    value = [module.criar_instancia.instance_ip_dns]
 }
