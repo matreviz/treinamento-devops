@@ -1,0 +1,94 @@
+- hosts: all
+  handlers:
+    - name: "restart apache"
+      service:
+        name: apache2
+        state: restarted
+      become: yes
+  tasks:
+    # - name: "Roda: sudo apt update"
+    #   become: yes
+    #   apt:
+    #     upgrade: yes
+    #     update_cache: yes
+    #     cache_valid_time: 86400 #Um dia
+    
+    - name: "Instala pacotes em lote"
+      apt:
+        name: "{{ item }}"
+        state: latest
+      become: yes # roda com sudo
+      with_items:
+        - maven
+        - openjdk-8-jdk
+        - mysql-server
+        - unzip
+        - nginx
+
+
+    # - name: "Fazendo downlaod do wordpress"
+    #   get_url:
+    #     url: "https://github.com/torneseumprogramador/spring-web-youtube/archive/refs/heads/main.zip"
+    #     dest: "/tmp/spring-web-youtube.zip"
+    
+    # - name: "Fazendo descompactação dos arquivos do WP"
+    #   unarchive:
+    #     src: "/tmp/spring-web-youtube.zip"
+    #     dest: "/home/ubuntu"
+    #     remote_src: yes
+    #   become: yes
+
+    - name: "Lavanta serviço do mysql"
+      become: yes
+      service:
+         name: mysql
+         state: started
+
+    - name: "Criando senha root mysql"
+      become: yes
+      mysql_user:
+        name: root
+        host: localhost
+        password: root
+        priv: "*.*:ALL,GRANT"
+
+    - name: "Cria o banco de dados MySQL"
+      mysql_db:
+        name: treinamento_database
+        login_user: root
+        login_password: root
+        state: present
+        
+    ## Altera config mysql 
+    - name: "altera config mysql"
+      replace:
+        path: '/etc/mysql/mysql.conf.d/mysqld.cnf'
+        regexp: "{{ item.regex }}"
+        replace: "{{ item.value }}"
+      with_items:
+        - { regex: '127.0.0.1', value: '0.0.0.0' }
+      become: yes
+
+    ## adicionar user, password e database no bashrc
+    - name: Adicionar user no bashrc
+      lineinfile: dest=~/.bashrc line='export USER=root' state=present
+    
+    - name: Adicionar PASSWORD no bashrc
+      lineinfile: dest=~/.bashrc line='export PASSWORD=root' state=present
+    
+    - name: Adicionar no bashrc
+      lineinfile: dest=~/.bashrc line='export DATABASE_URL="mysql://localhost:3306"' state=present
+    
+    - name: Aplicar o bashrc
+      shell: source ~/.bashrc
+      args:
+        executable: /bin/bash
+    
+    #### executa shell para package do mvn
+    - name: "fazendo o mvn package"
+      shell: "cd spring-web-youtube-main/ && sudo mvn package"
+ 
+    #### start vps
+    - name: "startando aplicação"
+      shell: "cd spring-web-youtube-main/ && mvn spring-boot:start"
+        
