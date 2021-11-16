@@ -1,3 +1,9 @@
- ansible-playbook -i hosts provisionar.yml -u ubuntu --private-key ../../id_rsa_itau_treinamento
+ ansible-playbook -i hosts provisionar.yml -u ubuntu --private-key ~/.ssh/id_teste
 
- ssh -i ../../id_rsa_itau_treinamento ubuntu@ec2-3-93-240-108.compute-1.amazonaws.com
+ ssh -i ~/.ssh/id_teste ubuntu@ec2-54-232-7-58.sa-east-1.compute.amazonaws.com
+
+
+ 
+
+
+
