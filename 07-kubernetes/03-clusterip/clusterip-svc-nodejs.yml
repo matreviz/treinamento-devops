@@ -5,7 +5,7 @@ metadata:
 spec:
   type: ClusterIP
   selector:
-    app: label-imersao-nodejs
+    app: matheustreviz-nodejs
   ports:
     - port: 3000
       targetPort: 3000

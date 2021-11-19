@@ -1,5 +1,19 @@
-  "worker 1 - 54.232.50.76 - ssh -i ~/.ssh/id_teste ubuntu@ec2-54-232-50-76.sa-east-1.compute.amazonaws.com",
-  "worker 2 - 18.231.27.111 - ssh -i ~/.ssh/id_teste ubuntu@ec2-18-231-27-111.sa-east-1.compute.amazonaws.com",
-  "worker 3 - 54.94.98.66 - ssh -i ~/.ssh/id_teste ubuntu@ec2-54-94-98-66.sa-east-1.compute.amazonaws.com",
+k8s-masters = [
+  "k8s-master 1 - 10.20.14.241 - ssh -i ~/.ssh/id_teste ubuntu@ec2-18-231-113-191.sa-east-1.compute.amazonaws.com -o ServerAliveInterval=60",
+  "k8s-master 2 - 10.20.5.186 - ssh -i ~/.ssh/id_teste ubuntu@ec2-54-232-79-95.sa-east-1.compute.amazonaws.com -o ServerAliveInterval=60",
+  "k8s-master 3 - 10.20.7.116 - ssh -i ~/.ssh/id_teste ubuntu@ec2-52-67-4-129.sa-east-1.compute.amazonaws.com -o ServerAliveInterval=60",
+]
+output-k8s_proxy = [
+  "k8s_proxy - 10.20.4.66 - ssh -i ~/.ssh/id_teste ubuntu@ec2-54-94-193-178.sa-east-1.compute.amazonaws.com -o ServerAliveInterval=60",
+]
+output-k8s_workers = [
+  "k8s-workers 1 - 10.20.5.153 - ssh -i ~/.ssh/id_teste ubuntu@ec2-18-230-62-40.sa-east-1.compute.amazonaws.com -o ServerAliveInterval=60",
+  "k8s-workers 2 - 10.20.2.183 - ssh -i ~/.ssh/id_teste ubuntu@ec2-15-228-101-233.sa-east-1.compute.amazonaws.com -o ServerAliveInterval=60",
+  "k8s-workers 3 - 10.20.11.254 - ssh -i ~/.ssh/id_teste ubuntu@ec2-18-229-148-109.sa-east-1.compute.amazonaws.com -o ServerAliveInterval=60",
+]
+security-group-workers-e-haproxy = "sg-0fa864c2b449c0b84"
 
-  "master - 52.67.191.243 - ssh -i ~/.ssh/id_teste ubuntu@ec2-52-67-191-243.sa-east-1.compute.amazonaws.com"
+
+  "sg haproxy - sg-0fa864c2b449c0b84",
+  "sg workers - sg-0608f46c3a1d21b4a",
+  "sg masters - sg-0a67c5dfb4004349e",

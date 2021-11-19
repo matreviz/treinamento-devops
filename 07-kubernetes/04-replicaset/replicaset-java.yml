@@ -4,28 +4,26 @@ metadata:
   name: java-replicaset
 spec:
   template:
-    metadata:
-      name: pod-javadb
-      labels:
-        app: pod-javadb
+      metadata:
+        name: nodeport-pod-java
+      spec:
+        type: NodePort
+        ports:
+          - port: 80
+            nodePort: 30000 # 30000 ~ 32767
+        selector:
+          app: matheustreviz-nginx
     spec:
       containers:
-        - name: container-pod-javadb
-          image: didox/crud-java-login:v0.0.1
-          env:
-            - name: USER
-              value: root
-            - name: PASSWORD
-              value: password_mysql
-            - name: DATABASE_URL
-              value: mysql://mysql:3306/SpringWebYoutubeTest?useTimezone=true&serverTimezone=UTC
-              # value: mysql://10.111.41.255:3306/SpringWebYoutubeTest?useTimezone=true&serverTimezone=UTC
+        - name: container-pod-nodejs
+          image: matheustreviz/validador-cpf-java-turma-devops
           ports:
-            - containerPort: 8080
-  replicas: 2
+            - containerPort: 80
+  replicas: 3
   selector:
     matchLabels:
-      app: pod-javadb
+      app: matheustreviz-nginx
+
 
 
 # $ kubectl logs -l app=lable-pod-java # log de todos os lables do replicaset
