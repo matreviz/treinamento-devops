@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd ~TestePipelineMatheus/08-jenkins/deploy-infra-img-java-app/terraform
+cd ~/TestePipelineMatheus/08-jenkins/deploy-infra-img-java-app/terraform
 terraform init
 terraform fmt
 terraform apply -auto-approve
